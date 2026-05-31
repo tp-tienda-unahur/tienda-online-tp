@@ -32,7 +32,7 @@ function DetalleProducto() {
     );
   }
 
-  const sinStock = producto.stock === 0;
+  const sinStock = producto.tallas.every((t) => t.stock === 0);
 
   return (
     <div className="bg-white text-black min-h-screen">
@@ -72,7 +72,7 @@ function DetalleProducto() {
                   </span>
                 ) : (
                   <span className="border border-black px-3 py-1 text-xs font-bold uppercase tracking-wider text-gray-500">
-                    Stock: {producto.stock} unidades
+                    Talles disponibles
                   </span>
                 )}
               </div>
@@ -99,12 +99,17 @@ function DetalleProducto() {
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {producto.tallas.map((talla) => (
-                    <span
-                      key={talla}
-                      className="border border-black w-12 h-10 flex items-center justify-center text-sm font-medium hover:bg-black hover:text-white transition-all duration-200 cursor-pointer"
-                    >
-                      {talla}
-                    </span>
+              <span
+                    key={talla.numero}
+                    className={`w-12 h-10 flex items-center justify-center text-sm font-medium transition-all duration-200 border ${
+                      talla.stock === 0
+                        ? 'border-gray-200 text-gray-300 cursor-not-allowed line-through'
+                        : 'border-black hover:bg-black hover:text-white cursor-pointer'
+                    }`}
+                    title={talla.stock === 0 ? 'Sin stock' : `Stock: ${talla.stock}`}
+                  >
+                    {talla.numero}
+                  </span>
                   ))}
                 </div>
               </div>
