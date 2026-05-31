@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { productos } from '../data/productos';
+import ProductoCard from '../components/ProductoCard';
 
 const CATEGORIAS = ['Todas', 'Urbana', 'Running', 'Tenis'];
 
@@ -76,71 +76,12 @@ function Productos() {
 
         {/* Grid de productos */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {productosFiltrados.map((producto) => {
-            const sinStock = producto.stock === 0;
-
-            return (
-              <div
-                key={producto.id}
-                className="border border-black flex flex-col group"
-              >
-                {/* Imagen */}
-                <div className="relative overflow-hidden">
-                  <img
-                    src={producto.imagen}
-                    alt={producto.nombre}
-                    className="w-full h-56 object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                  />
-                  {sinStock && (
-                    <span className="absolute top-2 right-2 bg-black text-white text-xs font-bold px-2 py-1">
-                      SIN STOCK
-                    </span>
-                  )}
-                  <span className="absolute top-2 left-2 bg-white text-black text-xs font-bold px-2 py-1 border border-black">
-                    {producto.categoria}
-                  </span>
-                </div>
-
-                {/* Info */}
-                <div className="p-4 flex flex-col flex-grow">
-                  <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">
-                    {producto.marca}
-                  </p>
-                  <h3 className="font-bold text-sm leading-tight mb-2 line-clamp-2">
-                    {producto.nombre}
-                  </h3>
-                  <p className="text-gray-500 text-xs mb-4 line-clamp-2 flex-grow">
-                    {producto.descripcion}
-                  </p>
-
-                  <div className="mt-auto">
-                    <p className="font-black text-lg mb-3">
-                      ${producto.precio.toLocaleString('es-AR')}
-                    </p>
-
-                    <div className="flex gap-2">
-                      <Link
-                        to={`/productos/${producto.id}`}
-                        className="flex-1 text-center border border-black py-2 text-xs font-bold uppercase tracking-wider hover:bg-black hover:text-white transition-all duration-200"
-                      >
-                        Ver detalle
-                      </Link>
-                      <button
-                        disabled={sinStock}
-                        className={`flex-1 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-200 ${
-                          sinStock
-                            ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                            : 'bg-black text-white hover:bg-white hover:text-black border border-black'
-                        }`}
-                      >
-                        {sinStock ? 'Sin stock' : 'Agregar'}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          {productosFiltrados.map((producto) => (
+            <ProductoCard
+              key={producto.id}
+              producto={producto}
+            />
+          ))}
         </div>
       </div>
     </div>
