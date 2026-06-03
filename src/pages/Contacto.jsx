@@ -1,15 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-// CONSIGNA REQ. 6 — opciones del campo "Método de entrega"
+// opciones del campo "Método de entrega"
 const METODOS_ENTREGA = ['Envío a domicilio', 'Retiro en local'];
 
-// CONSIGNA REQ. 6 — "Formulario de compra o contacto"
-// Recibe totalItems para bloquear el botón si el carrito está vacío
-// Recibe vaciarCarrito para limpiar el carrito al confirmar la compra
+// Formulario de compra o contacto
 function Contacto({ totalItems, vaciarCarrito }) {
-  // CONSIGNA REQ. 6 — "Manejo de estado con useState" para cada campo del formulario
-  // Campos mínimos requeridos: nombre, email, teléfono, dirección, método de entrega, mensaje (opcional)
+  // "Manejo de estado con useState" para cada campo del formulario
   const [form, setForm] = useState({
     nombre: '',
     email: '',
@@ -25,35 +22,29 @@ function Contacto({ totalItems, vaciarCarrito }) {
   // Estado que controla si se muestra la pantalla de confirmación
   const [confirmado, setConfirmado] = useState(false);
 
-  // CONSIGNA REQ. 6 — "eventos onChange" — actualiza el campo correspondiente y limpia su error
+  // actualiza el campo correspondiente y limpia su error
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
     setErrores({ ...errores, [e.target.name]: '' });
   }
 
-  // CONSIGNA REQ. 6 — "validaciones simples"
+  // validaciones simples
   // Devuelve un objeto con los errores encontrados; si está vacío, el formulario es válido
   function validar() {
     const nuevosErrores = {};
-    // CONSIGNA REQ. 6 — "nombre obligatorio"
     if (!form.nombre.trim()) nuevosErrores.nombre = 'El nombre es obligatorio.';
-    // CONSIGNA REQ. 6 — "email obligatorio" y "email con formato válido"
     if (!form.email.trim()) {
       nuevosErrores.email = 'El email es obligatorio.';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       nuevosErrores.email = 'El email no tiene un formato válido.';
     }
-    // CONSIGNA REQ. 6 — "teléfono obligatorio"
     if (!form.telefono.trim()) nuevosErrores.telefono = 'El teléfono es obligatorio.';
-    // CONSIGNA REQ. 6 — "dirección o localidad obligatoria"
     if (!form.direccion.trim()) nuevosErrores.direccion = 'La dirección es obligatoria.';
-    // Método de entrega obligatorio (campo mínimo de la consigna)
     if (!form.metodoEntrega) nuevosErrores.metodoEntrega = 'Seleccioná un método de entrega.';
     return nuevosErrores;
   }
 
-  // CONSIGNA REQ. 6 — "eventos onSubmit"
-  // CONSIGNA REQ. 6 — "no permitir confirmar si el carrito está vacío"
+  // el carrito está vacío
   function handleSubmit(e) {
     e.preventDefault();
     if (totalItems === 0) return;
@@ -62,13 +53,12 @@ function Contacto({ totalItems, vaciarCarrito }) {
       setErrores(nuevosErrores);
       return;
     }
-    // CONSIGNA REQ. 4 — "Confirmar la compra de manera simulada — mensaje en pantalla"
+    // Confirmar la compra de manera simulada 
     setConfirmado(true);
-    // Vacía el carrito en App.jsx al confirmar la compra
     vaciarCarrito();
   }
 
-  // CONSIGNA REQ. 4 — pantalla de confirmación simulada que se muestra al enviar el formulario
+  // pantalla de confirmación simulada que se muestra al enviar el formulario
   // Usa los datos del formulario (nombre, email) para personalizar el mensaje
   if (confirmado) {
     return (
@@ -98,8 +88,7 @@ function Contacto({ totalItems, vaciarCarrito }) {
           <p className="text-gray-500 mt-1">Completá tus datos para confirmar el pedido.</p>
         </div>
 
-        {/* CONSIGNA REQ. 6 — "no permitir confirmar si el carrito está vacío" */}
-        {/* Aviso visible cuando se accede a /contacto sin productos en el carrito */}
+        {/* no permitir confirmar si el carrito está vacio */}
         {totalItems === 0 && (
           <div className="border border-black bg-gray-50 p-4 mb-6 text-center">
             <p className="text-sm font-bold uppercase tracking-wider">Tu carrito está vacío.</p>
@@ -112,11 +101,9 @@ function Contacto({ totalItems, vaciarCarrito }) {
           </div>
         )}
 
-        {/* CONSIGNA REQ. 6 — "formulario controlado con React" */}
-        {/* Cada campo usa value + onChange para mantener el estado sincronizado */}
+        {/* formulario controlado con React */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
 
-          {/* CONSIGNA REQ. 6 — campo: nombre y apellido (obligatorio) */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider mb-1">
               Nombre y apellido
@@ -133,7 +120,6 @@ function Contacto({ totalItems, vaciarCarrito }) {
             {errores.nombre && <p className="text-red-500 text-xs mt-1">{errores.nombre}</p>}
           </div>
 
-          {/* CONSIGNA REQ. 6 — campo: email (obligatorio + formato válido) */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider mb-1">Email</label>
             <input
@@ -148,7 +134,6 @@ function Contacto({ totalItems, vaciarCarrito }) {
             {errores.email && <p className="text-red-500 text-xs mt-1">{errores.email}</p>}
           </div>
 
-          {/* CONSIGNA REQ. 6 — campo: teléfono (obligatorio) */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider mb-1">Teléfono</label>
             <input
@@ -163,7 +148,6 @@ function Contacto({ totalItems, vaciarCarrito }) {
             {errores.telefono && <p className="text-red-500 text-xs mt-1">{errores.telefono}</p>}
           </div>
 
-          {/* CONSIGNA REQ. 6 — campo: dirección o localidad (obligatorio) */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider mb-1">
               Dirección o localidad
@@ -180,7 +164,6 @@ function Contacto({ totalItems, vaciarCarrito }) {
             {errores.direccion && <p className="text-red-500 text-xs mt-1">{errores.direccion}</p>}
           </div>
 
-          {/* CONSIGNA REQ. 6 — campo: método de entrega (obligatorio) */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider mb-1">
               Método de entrega
@@ -205,7 +188,6 @@ function Contacto({ totalItems, vaciarCarrito }) {
             )}
           </div>
 
-          {/* CONSIGNA REQ. 6 — campo: mensaje o aclaración (opcional) */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider mb-1">
               Mensaje o aclaración{' '}
@@ -220,8 +202,7 @@ function Contacto({ totalItems, vaciarCarrito }) {
             />
           </div>
 
-          {/* CONSIGNA REQ. 6 — botón deshabilitado si el carrito está vacío */}
-          {/* Al hacer submit ejecuta handleSubmit que valida y confirma la compra */}
+          {/*  botón deshabilitado si el carrito está vacío */}
           <button
             type="submit"
             disabled={totalItems === 0}
