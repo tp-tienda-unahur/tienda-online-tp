@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+// CONSIGNA REQ. 7 — "barra de navegación visible y clara"
+// Recibe totalItems desde App.jsx para mostrar el contador del carrito en tiempo real
+const Navbar = ({ totalItems }) => {
   return (
     <nav className="bg-white border-b border-black sticky top-0 z-50">
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
@@ -8,6 +10,7 @@ const Navbar = () => {
           HurlingSports
         </Link>
 
+        {/* CONSIGNA REQ. 7 — links a: Inicio, Productos, Contacto */}
         <ul className="hidden md:flex space-x-8 font-medium">
           <li>
             <Link to="/" className="text-gray-500 hover:text-black transition-colors duration-200">
@@ -26,6 +29,8 @@ const Navbar = () => {
           </li>
         </ul>
 
+        {/* CONSIGNA REQ. 7 — ícono del carrito con badge que muestra totalItems */}
+        {/* totalItems viene de App.jsx y se actualiza cada vez que se agrega o quita un producto */}
         <Link to="/carrito" className="relative p-2 text-black hover:scale-105 transition-transform" aria-label="Carrito">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +47,7 @@ const Navbar = () => {
             />
           </svg>
           <span className="absolute -top-0.5 -right-0.5 bg-black text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center border border-white">
-            0
+            {totalItems}
           </span>
         </Link>
       </div>

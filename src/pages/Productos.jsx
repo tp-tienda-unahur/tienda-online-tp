@@ -2,13 +2,16 @@ import { useState } from 'react';
 import { productos } from '../data/productos';
 import ProductoCard from '../components/ProductoCard';
 
+// categorías disponibles de las zapas
 const CATEGORIAS = ['Todas', 'Urbana', 'Running', 'Tenis'];
 
-function Productos() {
+// catalogo 
+// Recibe agregarAlCarrito desde App.jsx para pasársela a cada ProductoCard
+function Productos({ agregarAlCarrito }) {
+  // las 3 funcionalidades de filtrado/ordenamiento
   const [busqueda, setBusqueda] = useState('');
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('Todas');
   const [orden, setOrden] = useState('ninguno');
-
   const productosFiltrados = productos
     .filter((p) => {
       const coincideNombre = p.nombre
@@ -28,15 +31,15 @@ function Productos() {
     <div className="bg-white text-black min-h-screen">
       <div className="container mx-auto px-6 py-12">
 
-        {/* Título */}
         <div className="mb-8 border-b border-black pb-6">
           <h1 className="text-4xl font-black uppercase tracking-tight">Catálogo</h1>
+          {/* Muestra cuántos productos coinciden con los filtros activos */}
           <p className="text-gray-500 mt-1">
             {productosFiltrados.length} producto{productosFiltrados.length !== 1 ? 's' : ''}
           </p>
         </div>
 
-        {/* Filtros */}
+        {/* controles de búsqueda y filtros */}
         <div className="flex flex-col md:flex-row gap-4 mb-10">
           <input
             type="text"
@@ -46,6 +49,7 @@ function Productos() {
             className="border border-black px-4 py-2 w-full md:w-80 focus:outline-none focus:ring-2 focus:ring-black"
           />
 
+          {/* Filtro por categoría  */}
           <select
             value={categoriaSeleccionada}
             onChange={(e) => setCategoriaSeleccionada(e.target.value)}
@@ -56,6 +60,7 @@ function Productos() {
             ))}
           </select>
 
+          {/* Ordenamiento por precio ascendente o descendente */}
           <select
             value={orden}
             onChange={(e) => setOrden(e.target.value)}
@@ -67,19 +72,20 @@ function Productos() {
           </select>
         </div>
 
-        {/* Sin resultados */}
+        {/* Mensaje cuando ningún producto coincide con los filtros */}
         {productosFiltrados.length === 0 && (
           <p className="text-gray-500 text-center py-20">
             No se encontraron productos.
           </p>
         )}
 
-        {/* Grid de productos */}
+        {/* Renderizado de productos */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {productosFiltrados.map((producto) => (
             <ProductoCard
               key={producto.id}
               producto={producto}
+              agregarAlCarrito={agregarAlCarrito}
             />
           ))}
         </div>

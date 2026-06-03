@@ -1,9 +1,11 @@
 import { useParams, Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { productos } from '../data/productos';
 
-function DetalleProducto() {
+// vista de los detalle de cada producto
+function DetalleProducto({ agregarAlCarrito }) {
   const { id } = useParams();
+  const [tallaElegida, setTallaElegida] = useState('');
 
   const producto = productos.find((p) => p.id === parseInt(id));
 
@@ -16,6 +18,7 @@ function DetalleProducto() {
     };
   }, [producto]);
 
+  // Si el id no corresponde a ningún producto, muestra error 
   if (!producto) {
     return (
       <div className="container mx-auto px-6 py-20 text-center">
@@ -32,13 +35,12 @@ function DetalleProducto() {
     );
   }
 
+  // en caso de que un producto no tenga stock muestra deshabilitado
   const sinStock = producto.tallas.every((t) => t.stock === 0);
 
   return (
     <div className="bg-white text-black min-h-screen">
       <div className="container mx-auto px-6 py-12">
-
-        {/* Breadcrumb */}
         <nav className="mb-8 text-sm text-gray-400">
           <Link to="/" className="hover:text-black transition-colors">Inicio</Link>
           <span className="mx-2">/</span>
@@ -49,7 +51,6 @@ function DetalleProducto() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
-          {/* Imagen */}
           <div className="border border-black overflow-hidden" style={{ minHeight: '480px' }}>
             <img
               src={producto.imagen}
@@ -59,9 +60,9 @@ function DetalleProducto() {
             />
           </div>
 
-          {/* Info */}
           <div className="flex flex-col justify-between">
             <div>
+              {/* categoría y estado de stock */}
               <div className="flex gap-3 mb-4 flex-wrap">
                 <span className="border border-black px-3 py-1 text-xs font-bold uppercase tracking-wider">
                   {producto.categoria}
@@ -77,6 +78,7 @@ function DetalleProducto() {
                 )}
               </div>
 
+              {/* nombre del producto, precio, descripción completa */}
               <p className="text-sm text-gray-400 uppercase tracking-widest mb-1">
                 {producto.marca}
               </p>
@@ -92,29 +94,33 @@ function DetalleProducto() {
                 {producto.descripcionCompleta}
               </p>
 
-              {/* Tallas */}
+              {/* stock disponible" — talles clickeables */}
+              {/* Al hacer click en un talle con stock se guarda en tallaElegida */}
               <div className="mb-8">
                 <p className="text-xs font-bold uppercase tracking-wider mb-3">
                   Tallas disponibles
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {producto.tallas.map((talla) => (
-              <span
-                    key={talla.numero}
-                    className={`w-12 h-10 flex items-center justify-center text-sm font-medium transition-all duration-200 border ${
-                      talla.stock === 0
-                        ? 'border-gray-200 text-gray-300 cursor-not-allowed line-through'
-                        : 'border-black hover:bg-black hover:text-white cursor-pointer'
-                    }`}
-                    title={talla.stock === 0 ? 'Sin stock' : `Stock: ${talla.stock}`}
-                  >
-                    {talla.numero}
-                  </span>
+                    <span
+                      key={talla.numero}
+                      onClick={() => talla.stock > 0 && setTallaElegida(talla.numero)}
+                      className={`w-12 h-10 flex items-center justify-center text-sm font-medium transition-all duration-200 border ${
+                        talla.stock === 0
+                          ? 'border-gray-200 text-gray-300 cursor-not-allowed line-through'
+                          : tallaElegida === talla.numero
+                          ? 'bg-black text-white border-black cursor-pointer'
+                          : 'border-black hover:bg-black hover:text-white cursor-pointer'
+                      }`}
+                      title={talla.stock === 0 ? 'Sin stock' : `Stock: ${talla.stock}`}
+                    >
+                      {talla.numero}
+                    </span>
                   ))}
                 </div>
               </div>
 
-              {/* Características */}
+              {/* características principales */}
               <div className="mb-8">
                 <p className="text-xs font-bold uppercase tracking-wider mb-3">
                   Características
@@ -130,17 +136,22 @@ function DetalleProducto() {
               </div>
             </div>
 
-            {/* Botones */}
+            {/* botón para agregar al carrito y botón para volver al catálogo */}
             <div className="flex gap-4 flex-wrap">
+              {/* Deshabilitado si no hay stock o no se eligió talle */}
               <button
-                disabled={sinStock}
+                disabled={sinStock || !tallaElegida}
+                onClick={() => {
+                  agregarAlCarrito({ ...producto, talla: tallaElegida });
+                  setTallaElegida('');
+                }}
                 className={`flex-1 min-w-[160px] py-4 font-bold uppercase tracking-wider text-sm transition-all duration-200 ${
-                  sinStock
+                  sinStock || !tallaElegida
                     ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                     : 'bg-black text-white hover:bg-white hover:text-black border border-black'
                 }`}
               >
-                {sinStock ? 'Sin stock' : 'Agregar al carrito'}
+                {sinStock ? 'Sin stock' : !tallaElegida ? 'Elegí un talle' : 'Agregar al carrito'}
               </button>
 
               <Link
