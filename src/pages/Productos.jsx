@@ -7,7 +7,7 @@ const CATEGORIAS = ['Todas', 'Urbana', 'Running', 'Tenis'];
 
 // catalogo 
 // Recibe agregarAlCarrito desde App.jsx para pasársela a cada ProductoCard
-function Productos({ agregarAlCarrito }) {
+function Productos({ agregarAlCarrito, carrito = [] }) {
   // las 3 funcionalidades de filtrado/ordenamiento
   const [busqueda, setBusqueda] = useState('');
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('Todas');
@@ -86,6 +86,7 @@ function Productos({ agregarAlCarrito }) {
               key={producto.id}
               producto={producto}
               agregarAlCarrito={agregarAlCarrito}
+              carrito={carrito}
             />
           ))}
         </div>

@@ -1,6 +1,13 @@
+import { productos } from '../data/productos';
+
 // componente que representa un ítem dentro del carrito
 // Muestra: nombre, precio por unidad, cantidad, subtotal y controles de edición
 function CarritoItem({ item, aumentarCantidad, disminuirCantidad, eliminarDelCarrito }) {
+  const stockTalle = productos
+    .find(p => p.id === item.id)
+    ?.tallas.find(t => t.numero === Number(item.talla))
+    ?.stock ?? Infinity;
+
   return (
     <div className="flex items-center gap-4 border-b border-black dark:border-white py-6">
       <img
@@ -27,7 +34,12 @@ function CarritoItem({ item, aumentarCantidad, disminuirCantidad, eliminarDelCar
         <span className="w-8 text-center font-bold text-sm text-black dark:text-white">{item.cantidad}</span>
         <button
           onClick={() => aumentarCantidad(item.id, item.talla)}
-          className="w-8 h-8 border border-black dark:border-white flex items-center justify-center font-bold hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-200 text-black dark:text-white"
+          disabled={item.cantidad >= stockTalle}
+          className={`w-8 h-8 border flex items-center justify-center font-bold transition-all duration-200 ${
+            item.cantidad >= stockTalle
+              ? 'border-gray-200 dark:border-gray-700 text-gray-300 dark:text-gray-600 cursor-not-allowed'
+              : 'border-black dark:border-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black text-black dark:text-white'
+          }`}
         >
           +
         </button>
