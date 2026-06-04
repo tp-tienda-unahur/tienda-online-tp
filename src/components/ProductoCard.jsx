@@ -1,17 +1,26 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-function ProductoCard({ producto, agregarAlCarrito }) {
+function ProductoCard({ producto, agregarAlCarrito, carrito = [] }) {
   const [tallaElegida, setTallaElegida] = useState('');
   const [agregando, setAgregando] = useState(false);
 
   const sinStock = producto.tallas.every((t) => t.stock === 0);
 
+  const tallaNum = tallaElegida ? Number(tallaElegida) : null;
+  const stockTalle = tallaNum
+    ? (producto.tallas.find(t => t.numero === tallaNum)?.stock ?? 0)
+    : 0;
+  const cantidadEnCarrito = tallaNum
+    ? (carrito.find(i => i.id === producto.id && i.talla === tallaNum)?.cantidad ?? 0)
+    : 0;
+  const stockAgotadoEnCarrito = tallaNum && cantidadEnCarrito >= stockTalle;
+
   function handleAgregar() {
-    if (!tallaElegida) return;
+    if (!tallaElegida || stockAgotadoEnCarrito) return;
     setAgregando(true);
     if (agregarAlCarrito) {
-      agregarAlCarrito({ ...producto, talla: tallaElegida });
+      agregarAlCarrito({ ...producto, talla: Number(tallaElegida) });
     }
     setTimeout(() => {
       setAgregando(false);
@@ -80,17 +89,17 @@ function ProductoCard({ producto, agregarAlCarrito }) {
               Ver detalle
             </Link>
             <button
-              disabled={sinStock || !tallaElegida || agregando}
+              disabled={sinStock || !tallaElegida || agregando || stockAgotadoEnCarrito}
               onClick={handleAgregar}
               className={`flex-1 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-300 transform ${
                 agregando
                   ? 'bg-green-600 text-white scale-105 border border-green-600'
-                  : sinStock || !tallaElegida
+                  : sinStock || !tallaElegida || stockAgotadoEnCarrito
                   ? 'bg-gray-200 dark:bg-gray-600 text-gray-400 cursor-not-allowed'
                   : 'bg-black dark:bg-white text-white dark:text-black hover:bg-white dark:hover:bg-black hover:text-black dark:hover:text-white border border-black dark:border-white hover:scale-105'
               }`}
             >
-              {sinStock ? 'Sin stock' : agregando ? '✓ Agregado' : 'Agregar'}
+              {sinStock ? 'Sin stock' : agregando ? '✓ Agregado' : stockAgotadoEnCarrito ? 'Sin stock' : 'Agregar'}
             </button>
           </div>
         </div>

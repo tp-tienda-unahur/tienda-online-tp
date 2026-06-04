@@ -9,6 +9,7 @@ import DetalleProducto from './pages/DetalleProducto';
 import Carrito from './pages/Carrito';
 import Contacto from './pages/Contacto';
 import Nosotros from './pages/Nosotros';
+import NotFound from './pages/NotFound';
 
 function App() {
   // aca vive el estado del carrito, principal donde puede interactuar con todas las paginas que se necesite, laburando desde el estado
@@ -120,13 +121,13 @@ function App() {
             {/* productos recibe agregarAlCarrito para pasarlo a cada ProductoCard */}
             <Route
               path="/productos"
-              element={<Productos agregarAlCarrito={agregarAlCarrito} />}
+              element={<Productos agregarAlCarrito={agregarAlCarrito} carrito={carrito} />}
             />
 
             {/* rutas dinámicas /producto/:id" */}
             <Route
               path="/productos/:id"
-              element={<DetalleProducto agregarAlCarrito={agregarAlCarrito} />}
+              element={<DetalleProducto agregarAlCarrito={agregarAlCarrito} carrito={carrito} />}
             />
 
             {/* pagina del carrito con todas las funciones */}
@@ -149,6 +150,7 @@ function App() {
                 <Contacto totalItems={totalItems} vaciarCarrito={vaciarCarrito} />
               }
             />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
 

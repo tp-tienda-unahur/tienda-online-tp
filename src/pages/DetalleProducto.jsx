@@ -1,9 +1,9 @@
 import { useParams, Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { productos } from '../data/productos';
 
 // vista de los detalle de cada producto
-function DetalleProducto({ agregarAlCarrito }) {
+function DetalleProducto({ agregarAlCarrito, carrito = [] }) {
   const { id } = useParams();
   const [tallaElegida, setTallaElegida] = useState('');
 
@@ -35,8 +35,15 @@ function DetalleProducto({ agregarAlCarrito }) {
     );
   }
 
-  // en caso de que un producto no tenga stock muestra deshabilitado
   const sinStock = producto.tallas.every((t) => t.stock === 0);
+
+  const cantidadEnCarrito = tallaElegida
+    ? (carrito.find(i => i.id === producto.id && i.talla === tallaElegida)?.cantidad ?? 0)
+    : 0;
+  const stockTalleElegida = tallaElegida
+    ? (producto.tallas.find(t => t.numero === tallaElegida)?.stock ?? 0)
+    : 0;
+  const stockAgotadoEnCarrito = tallaElegida && cantidadEnCarrito >= stockTalleElegida;
 
   return (
     <div className="bg-white dark:bg-gray-900 text-black dark:text-white min-h-screen">
@@ -112,12 +119,22 @@ function DetalleProducto({ agregarAlCarrito }) {
                           ? 'bg-black dark:bg-white text-white dark:text-black border-black dark:border-white cursor-pointer'
                           : 'border-black dark:border-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black cursor-pointer text-black dark:text-white'
                       }`}
-                      title={talla.stock === 0 ? 'Sin stock' : `Stock: ${talla.stock}`}
                     >
                       {talla.numero}
                     </span>
                   ))}
                 </div>
+                {tallaElegida && (
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-3">
+                    Stock disponible:{' '}
+                    <span className={`font-bold ${stockAgotadoEnCarrito ? 'text-red-500' : 'text-black dark:text-white'}`}>
+                      {stockTalleElegida - cantidadEnCarrito} {stockTalleElegida - cantidadEnCarrito === 1 ? 'unidad' : 'unidades'}
+                    </span>
+                    {cantidadEnCarrito > 0 && (
+                      <span className="text-gray-400 ml-1">({cantidadEnCarrito} en tu carrito)</span>
+                    )}
+                  </p>
+                )}
               </div>
 
               {/* características principales */}
@@ -140,18 +157,18 @@ function DetalleProducto({ agregarAlCarrito }) {
             <div className="flex gap-4 flex-wrap">
               {/* Deshabilitado si no hay stock o no se eligió talle */}
               <button
-                disabled={sinStock || !tallaElegida}
+                disabled={sinStock || !tallaElegida || stockAgotadoEnCarrito}
                 onClick={() => {
                   agregarAlCarrito({ ...producto, talla: tallaElegida });
                   setTallaElegida('');
                 }}
                 className={`flex-1 min-w-[160px] py-4 font-bold uppercase tracking-wider text-sm transition-all duration-200 ${
-                  sinStock || !tallaElegida
+                  sinStock || !tallaElegida || stockAgotadoEnCarrito
                     ? 'bg-gray-200 dark:bg-gray-700 text-gray-400 cursor-not-allowed'
                     : 'bg-black dark:bg-white text-white dark:text-black hover:bg-white dark:hover:bg-black hover:text-black dark:hover:text-white border border-black dark:border-white'
                 }`}
               >
-                {sinStock ? 'Sin stock' : !tallaElegida ? 'Elegí un talle' : 'Agregar al carrito'}
+                {sinStock ? 'Sin stock' : !tallaElegida ? 'Elegí un talle' : stockAgotadoEnCarrito ? 'Stock agotado' : 'Agregar al carrito'}
               </button>
 
               <Link
