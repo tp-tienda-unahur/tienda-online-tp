@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { productos } from '../data/productos';
 
 // vista de los detalle de cada producto
@@ -22,12 +22,12 @@ function DetalleProducto({ agregarAlCarrito }) {
   if (!producto) {
     return (
       <div className="container mx-auto px-6 py-20 text-center">
-        <p className="text-gray-500 text-lg mb-6">
+        <p className="text-gray-500 dark:text-gray-400 text-lg mb-6">
           No se encontró el producto con ID <strong>{id}</strong>.
         </p>
         <Link
           to="/productos"
-          className="inline-block border border-black px-6 py-3 font-bold uppercase tracking-wider hover:bg-black hover:text-white transition-all duration-200"
+          className="inline-block border border-black dark:border-white px-6 py-3 font-bold uppercase tracking-wider hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-200 text-black dark:text-white"
         >
           Volver al catálogo
         </Link>
@@ -39,19 +39,19 @@ function DetalleProducto({ agregarAlCarrito }) {
   const sinStock = producto.tallas.every((t) => t.stock === 0);
 
   return (
-    <div className="bg-white text-black min-h-screen">
+    <div className="bg-white dark:bg-gray-900 text-black dark:text-white min-h-screen">
       <div className="container mx-auto px-6 py-12">
         <nav className="mb-8 text-sm text-gray-400">
-          <Link to="/" className="hover:text-black transition-colors">Inicio</Link>
+          <Link to="/" className="hover:text-black dark:hover:text-white transition-colors">Inicio</Link>
           <span className="mx-2">/</span>
-          <Link to="/productos" className="hover:text-black transition-colors">Productos</Link>
+          <Link to="/productos" className="hover:text-black dark:hover:text-white transition-colors">Productos</Link>
           <span className="mx-2">/</span>
-          <span className="text-black font-medium">{producto.nombre}</span>
+          <span className="text-black dark:text-white font-medium">{producto.nombre}</span>
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
-          <div className="border border-black overflow-hidden" style={{ minHeight: '480px' }}>
+          <div className="border border-black dark:border-white overflow-hidden" style={{ minHeight: '480px' }}>
             <img
               src={producto.imagen}
               alt={producto.nombre}
@@ -64,15 +64,15 @@ function DetalleProducto({ agregarAlCarrito }) {
             <div>
               {/* categoría y estado de stock */}
               <div className="flex gap-3 mb-4 flex-wrap">
-                <span className="border border-black px-3 py-1 text-xs font-bold uppercase tracking-wider">
+                <span className="border border-black dark:border-white px-3 py-1 text-xs font-bold uppercase tracking-wider">
                   {producto.categoria}
                 </span>
                 {sinStock ? (
-                  <span className="bg-black text-white px-3 py-1 text-xs font-bold uppercase tracking-wider">
+                  <span className="bg-black dark:bg-white text-white dark:text-black px-3 py-1 text-xs font-bold uppercase tracking-wider">
                     Sin stock
                   </span>
                 ) : (
-                  <span className="border border-black px-3 py-1 text-xs font-bold uppercase tracking-wider text-gray-500">
+                  <span className="border border-black dark:border-white px-3 py-1 text-xs font-bold uppercase tracking-wider text-gray-500">
                     Talles disponibles
                   </span>
                 )}
@@ -90,7 +90,7 @@ function DetalleProducto({ agregarAlCarrito }) {
                 ${producto.precio.toLocaleString('es-AR')}
               </p>
 
-              <p className="text-gray-600 leading-relaxed mb-8">
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-8">
                 {producto.descripcionCompleta}
               </p>
 
@@ -107,10 +107,10 @@ function DetalleProducto({ agregarAlCarrito }) {
                       onClick={() => talla.stock > 0 && setTallaElegida(talla.numero)}
                       className={`w-12 h-10 flex items-center justify-center text-sm font-medium transition-all duration-200 border ${
                         talla.stock === 0
-                          ? 'border-gray-200 text-gray-300 cursor-not-allowed line-through'
+                          ? 'border-gray-200 dark:border-gray-700 text-gray-300 dark:text-gray-600 cursor-not-allowed line-through'
                           : tallaElegida === talla.numero
-                          ? 'bg-black text-white border-black cursor-pointer'
-                          : 'border-black hover:bg-black hover:text-white cursor-pointer'
+                          ? 'bg-black dark:bg-white text-white dark:text-black border-black dark:border-white cursor-pointer'
+                          : 'border-black dark:border-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black cursor-pointer text-black dark:text-white'
                       }`}
                       title={talla.stock === 0 ? 'Sin stock' : `Stock: ${talla.stock}`}
                     >
@@ -127,8 +127,8 @@ function DetalleProducto({ agregarAlCarrito }) {
                 </p>
                 <ul className="space-y-1">
                   {producto.caracteristicas.map((car, i) => (
-                    <li key={i} className="text-sm text-gray-600 flex items-start gap-2">
-                      <span className="text-black font-bold mt-0.5">—</span>
+                    <li key={i} className="text-sm text-gray-600 dark:text-gray-400 flex items-start gap-2">
+                      <span className="text-black dark:text-white font-bold mt-0.5">—</span>
                       {car}
                     </li>
                   ))}
@@ -147,8 +147,8 @@ function DetalleProducto({ agregarAlCarrito }) {
                 }}
                 className={`flex-1 min-w-[160px] py-4 font-bold uppercase tracking-wider text-sm transition-all duration-200 ${
                   sinStock || !tallaElegida
-                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                    : 'bg-black text-white hover:bg-white hover:text-black border border-black'
+                    ? 'bg-gray-200 dark:bg-gray-700 text-gray-400 cursor-not-allowed'
+                    : 'bg-black dark:bg-white text-white dark:text-black hover:bg-white dark:hover:bg-black hover:text-black dark:hover:text-white border border-black dark:border-white'
                 }`}
               >
                 {sinStock ? 'Sin stock' : !tallaElegida ? 'Elegí un talle' : 'Agregar al carrito'}
@@ -156,7 +156,7 @@ function DetalleProducto({ agregarAlCarrito }) {
 
               <Link
                 to="/productos"
-                className="flex-1 min-w-[160px] py-4 text-center font-bold uppercase tracking-wider text-sm border border-black hover:bg-black hover:text-white transition-all duration-200"
+                className="flex-1 min-w-[160px] py-4 text-center font-bold uppercase tracking-wider text-sm border border-black dark:border-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-200 text-black dark:text-white"
               >
                 Volver al catálogo
               </Link>

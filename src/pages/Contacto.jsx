@@ -63,16 +63,16 @@ function Contacto({ totalItems, vaciarCarrito }) {
   if (confirmado) {
     return (
       <div className="container mx-auto px-6 py-20 text-center">
-        <h1 className="text-4xl font-black uppercase tracking-tight mb-4">¡Compra confirmada!</h1>
-        <p className="text-gray-500 mb-2">
+        <h1 className="text-4xl font-black uppercase tracking-tight mb-4 text-black dark:text-white">¡Compra confirmada!</h1>
+        <p className="text-gray-500 dark:text-gray-400 mb-2">
           Gracias por tu compra, <strong>{form.nombre}</strong>.
         </p>
-        <p className="text-gray-500 mb-8">
+        <p className="text-gray-500 dark:text-gray-400 mb-8">
           Te contactaremos a <strong>{form.email}</strong> con los detalles del pedido.
         </p>
         <Link
           to="/productos"
-          className="inline-block bg-black text-white font-bold uppercase tracking-wider px-8 py-4 border border-black hover:bg-white hover:text-black transition-all duration-200"
+          className="inline-block bg-black dark:bg-white text-white dark:text-black font-bold uppercase tracking-wider px-8 py-4 border border-black dark:border-white hover:bg-white dark:hover:bg-black hover:text-black dark:hover:text-white transition-all duration-200"
         >
           Seguir comprando
         </Link>
@@ -81,20 +81,20 @@ function Contacto({ totalItems, vaciarCarrito }) {
   }
 
   return (
-    <div className="bg-white text-black min-h-screen">
+    <div className="bg-white dark:bg-gray-900 text-black dark:text-white min-h-screen">
       <div className="container mx-auto px-6 py-12 max-w-2xl">
-        <div className="mb-8 border-b border-black pb-6">
+        <div className="mb-8 border-b border-black dark:border-white pb-6">
           <h1 className="text-4xl font-black uppercase tracking-tight">Finalizar compra</h1>
-          <p className="text-gray-500 mt-1">Completá tus datos para confirmar el pedido.</p>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Completá tus datos para confirmar el pedido.</p>
         </div>
 
         {/* no permitir confirmar si el carrito está vacio */}
         {totalItems === 0 && (
-          <div className="border border-black bg-gray-50 p-4 mb-6 text-center">
+          <div className="border border-black dark:border-white bg-gray-50 dark:bg-gray-800 p-4 mb-6 text-center">
             <p className="text-sm font-bold uppercase tracking-wider">Tu carrito está vacío.</p>
             <Link
               to="/productos"
-              className="text-xs text-gray-500 hover:text-black transition-colors underline mt-1 inline-block"
+              className="text-xs text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors underline mt-1 inline-block"
             >
               Ir al catálogo
             </Link>
@@ -113,8 +113,8 @@ function Contacto({ totalItems, vaciarCarrito }) {
               name="nombre"
               value={form.nombre}
               onChange={handleChange}
-              className={`border px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-black ${
-                errores.nombre ? 'border-red-500' : 'border-black'
+              className={`border px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white bg-white dark:bg-gray-800 text-black dark:text-white ${
+                errores.nombre ? 'border-red-500' : 'border-black dark:border-white'
               }`}
             />
             {errores.nombre && <p className="text-red-500 text-xs mt-1">{errores.nombre}</p>}
@@ -127,8 +127,8 @@ function Contacto({ totalItems, vaciarCarrito }) {
               name="email"
               value={form.email}
               onChange={handleChange}
-              className={`border px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-black ${
-                errores.email ? 'border-red-500' : 'border-black'
+              className={`border px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white bg-white dark:bg-gray-800 text-black dark:text-white ${
+                errores.email ? 'border-red-500' : 'border-black dark:border-white'
               }`}
             />
             {errores.email && <p className="text-red-500 text-xs mt-1">{errores.email}</p>}
@@ -141,8 +141,8 @@ function Contacto({ totalItems, vaciarCarrito }) {
               name="telefono"
               value={form.telefono}
               onChange={handleChange}
-              className={`border px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-black ${
-                errores.telefono ? 'border-red-500' : 'border-black'
+              className={`border px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white bg-white dark:bg-gray-800 text-black dark:text-white ${
+                errores.telefono ? 'border-red-500' : 'border-black dark:border-white'
               }`}
             />
             {errores.telefono && <p className="text-red-500 text-xs mt-1">{errores.telefono}</p>}
@@ -157,8 +157,8 @@ function Contacto({ totalItems, vaciarCarrito }) {
               name="direccion"
               value={form.direccion}
               onChange={handleChange}
-              className={`border px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-black ${
-                errores.direccion ? 'border-red-500' : 'border-black'
+              className={`border px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white bg-white dark:bg-gray-800 text-black dark:text-white ${
+                errores.direccion ? 'border-red-500' : 'border-black dark:border-white'
               }`}
             />
             {errores.direccion && <p className="text-red-500 text-xs mt-1">{errores.direccion}</p>}
@@ -172,8 +172,8 @@ function Contacto({ totalItems, vaciarCarrito }) {
               name="metodoEntrega"
               value={form.metodoEntrega}
               onChange={handleChange}
-              className={`border px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-black bg-white ${
-                errores.metodoEntrega ? 'border-red-500' : 'border-black'
+              className={`border px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white bg-white dark:bg-gray-800 text-black dark:text-white ${
+                errores.metodoEntrega ? 'border-red-500' : 'border-black dark:border-white'
               }`}
             >
               <option value="">Seleccioná una opción</option>
@@ -198,7 +198,7 @@ function Contacto({ totalItems, vaciarCarrito }) {
               value={form.mensaje}
               onChange={handleChange}
               rows={3}
-              className="border border-black px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-black resize-none"
+              className="border border-black dark:border-white px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white resize-none bg-white dark:bg-gray-800 text-black dark:text-white"
             />
           </div>
 
@@ -208,8 +208,8 @@ function Contacto({ totalItems, vaciarCarrito }) {
             disabled={totalItems === 0}
             className={`py-4 font-bold uppercase tracking-wider text-sm transition-all duration-200 ${
               totalItems === 0
-                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                : 'bg-black text-white hover:bg-white hover:text-black border border-black'
+                ? 'bg-gray-200 dark:bg-gray-700 text-gray-400 cursor-not-allowed'
+                : 'bg-black dark:bg-white text-white dark:text-black hover:bg-white dark:hover:bg-black hover:text-black dark:hover:text-white border border-black dark:border-white'
             }`}
           >
             {totalItems === 0 ? 'Carrito vacío' : 'Confirmar compra'}

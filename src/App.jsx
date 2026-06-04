@@ -1,16 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Toast from './components/Toast';
 import Inicio from './pages/Inicio';
 import Productos from './pages/Productos';
 import DetalleProducto from './pages/DetalleProducto';
 import Carrito from './pages/Carrito';
 import Contacto from './pages/Contacto';
+import Nosotros from './pages/Nosotros';
 
 function App() {
   // aca vive el estado del carrito, principal donde puede interactuar con todas las paginas que se necesite, laburando desde el estado
-  const [carrito, setCarrito] = useState([]);
+  const [carrito, setCarrito] = useState(() => {
+  const guardado = localStorage.getItem('carrito');
+  return guardado ? JSON.parse(guardado) : [];
+  });
+
+  // Estado para el toast de notificación
+  const [toast, setToast] = useState({ visible: false, mensaje: '' });
+
+  // Guardar carrito en localStorage cada vez que cambia
+  useEffect(() => {
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+  }, [carrito]);
+
+   // Función para mostrar el toast
+  function mostrarToast(mensaje) {
+    setToast({ visible: true, mensaje });
+  }
+
+  // Función para cerrar el toast
+  function cerrarToast() {
+    setToast({ visible: false, mensaje: '' });
+  }
 
   // agrega un producto al carrito
   // Si ya existe el mismo producto con la misma talla, suma 1 a la cantidad
@@ -30,6 +53,7 @@ function App() {
       }
       return [...prev, { ...producto, cantidad: 1 }];
     });
+    mostrarToast(`${producto.nombre} (Talle ${producto.talla}) agregado`);
   }
 
   // eliminar productos del carrito
@@ -83,7 +107,7 @@ function App() {
   return (
     // la navegación 
     <BrowserRouter>
-      <div className="flex flex-col min-h-screen bg-gray-50">
+      <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">
         {/* Navbar recibe totalItems para mostrar el contador del carrito */}
         <Navbar totalItems={totalItems} />
 
@@ -91,6 +115,7 @@ function App() {
           {/* rutas de Inicio, Productos, Detalle, Carrito, Contacto y todo eso */}
           <Routes>
             <Route path="/" element={<Inicio />} />
+            <Route path="/nosotros" element={<Nosotros />} />
 
             {/* productos recibe agregarAlCarrito para pasarlo a cada ProductoCard */}
             <Route
@@ -128,6 +153,12 @@ function App() {
         </main>
 
         <Footer />
+        {/* Toast de notificación */}
+        <Toast
+          mensaje={toast.mensaje}
+          visible={toast.visible}
+          onClose={cerrarToast}
+        />
       </div>
     </BrowserRouter>
   );
