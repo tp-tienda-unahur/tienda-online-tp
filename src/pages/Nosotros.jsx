@@ -143,6 +143,20 @@ const Nosotros = () => {
               <h3 className="font-bold text-sm uppercase tracking-wider">Carla Mendez</h3>
               <p className="text-xs text-gray-500 dark:text-gray-400">Atención al Cliente</p>
             </div>
+
+            {/* Miembro 4 */}
+            <div className="text-center">
+              <div className="w-32 h-32 mx-auto mb-4 border border-black dark:border-white overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1724225618124-0f0d51cf33f4?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  alt="Miembro del equipo"
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                />
+              </div>
+              <h3 className="font-bold text-sm uppercase tracking-wider">Tomas Darielli</h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Marketing Manager</p>
+            </div>
+
           </div>
         </div>
       </section>
