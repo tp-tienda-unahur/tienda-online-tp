@@ -1,11 +1,18 @@
 import { Link } from 'react-router-dom';
 import CarritoItem from '../components/CarritoItem';
+import { useState } from 'react';
+import { cupones } from '../data/cupones'
 
 // Recibe el array carrito y las 3 funciones de manejo desde App.jsx via props
 function Carrito({ carrito, eliminarDelCarrito, aumentarCantidad, disminuirCantidad }) {
+  const [cupon, setCupon] = useState('');
+  const [cuponAplicado, setCuponAplicado] = useState(null);
+  const [mensajeCupon, setMensajeCupon] = useState('');
   const totalItems = carrito.reduce((acc, item) => acc + item.cantidad, 0);
 
   const total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+
+  const totalConDescuento = cuponAplicado ? total - (total * cuponAplicado.descuento) / 100 : total;
 
   if (carrito.length === 0) {
     return (
@@ -21,6 +28,29 @@ function Carrito({ carrito, eliminarDelCarrito, aumentarCantidad, disminuirCanti
       </div>
     );
   }
+
+function aplicarCupon() {
+  const cuponEncontrado = cupones.find(
+    (c) => c.codigo === cupon
+  );
+
+  if (!cuponEncontrado) {
+    setMensajeCupon("Descuento inexistente");
+    return;
+  }
+
+  if (cuponAplicado) {
+    if (cuponAplicado.codigo === cupon) {
+      setMensajeCupon("El descuento ya fue aplicado");
+    } else {
+      setMensajeCupon("Ya hay un descuento aplicado");
+    }
+    return;
+  }
+
+  setCuponAplicado(cuponEncontrado);
+  setMensajeCupon("Cupón aplicado correctamente");
+}
 
   return (
     <div className="bg-white dark:bg-gray-900 text-black dark:text-white min-h-screen">
@@ -44,6 +74,24 @@ function Carrito({ carrito, eliminarDelCarrito, aumentarCantidad, disminuirCanti
               />
             ))}
           </div>
+          {/* Panel de descuento: muestra el input para ingresar el codigo + boton de aplicar */ }
+          <div className="mt-4">
+            <p className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1 text-center">
+              ¿Tenés un cupón de descuento?
+            </p>
+              <input type="text" value={cupon} onChange={(e) => setCupon(e.target.value)}
+              className="w-full px-3 py-2 text-sm border border-black dark:border-white bg-white dark:bg-gray-900 text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-black dark:focus:ring-white transition"
+              />
+            <button onClick={aplicarCupon}
+            className="w-full mt-3 py-2 text-sm font-bold uppercase tracking-wider border border-black dark:border-white bg-black dark:bg-white text-white dark:text-black transition-all duration-200 hover:scale-[1.02] hover:shadow-md hover:opacity-90 active:scale-[0.98]">
+              Aplicar
+            </button>
+            {mensajeCupon && (
+            <p className="text-xs text-gray-500 mt-1">
+            {mensajeCupon}
+            </p>
+)}
+          </div>
 
           <div className="mt-8 lg:mt-0">
             <div className="border border-black dark:border-white p-6 sticky top-24 bg-white dark:bg-gray-800">
@@ -54,9 +102,21 @@ function Carrito({ carrito, eliminarDelCarrito, aumentarCantidad, disminuirCanti
                 <span>${total.toLocaleString('es-AR')}</span>
               </div>
 
+          {cuponAplicado && (
+          <div className="flex justify-between mb-2 text-sm text-green-600 dark:text-green-400">
+          <span>
+            DESCUENTO "{cuponAplicado.codigo}" APLICADO
+          </span>
+
+          <span>
+            -${((total * cuponAplicado.descuento) / 100).toLocaleString('es-AR')}
+          </span>
+        </div>
+)}
+
               <div className="border-t border-black dark:border-white pt-4 flex justify-between font-black text-lg">
                 <span>Total</span>
-                <span>${total.toLocaleString('es-AR')}</span>
+                <span>${totalConDescuento.toLocaleString('es-AR')}</span>
               </div>
 
               <Link
