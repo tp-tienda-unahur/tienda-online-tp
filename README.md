@@ -34,7 +34,7 @@ Abrí [http://localhost:5173](http://localhost:5173) en el navegador.
 ## Integrantes del grupo
 
 - Diaz, Marcelo Fabian
-- <!-- Completar -->
+- Lopez, Lucas Federico
 - <!-- Completar -->
 - <!-- Completar -->
 - <!-- Completar -->
