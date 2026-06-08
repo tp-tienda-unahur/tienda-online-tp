@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ScrollToTop from './components/ScrollToTop'
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Toast from './components/Toast';
@@ -108,6 +109,7 @@ function App() {
   return (
     // la navegación 
     <BrowserRouter>
+    <ScrollToTop />
       <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">
         {/* Navbar recibe totalItems para mostrar el contador del carrito */}
         <Navbar totalItems={totalItems} />

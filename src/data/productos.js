@@ -1,5 +1,4 @@
 export const productos = [
-  // ── URBANA ──────────────────────────────────────────────────────────────────
   {
     id: 1,
     nombre: "Nike Air Force 1 '07",
@@ -7,7 +6,7 @@ export const productos = [
     categoria: "Urbana",
     precio: 174999,
     imagen:
-      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80",
+      "https://images.unsplash.com/photo-1643340126284-ab7265a0721a?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     descripcion:
       "Ícono del streetwear desde 1982. Cuero premium y cámara de aire clásica.",
     descripcionCompleta:
@@ -35,7 +34,7 @@ export const productos = [
     categoria: "Urbana",
     precio: 148999,
     imagen:
-      "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&q=80",
+      "https://images.unsplash.com/photo-1777339862772-d6d3ed390efa?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     descripcion:
       "El tenis más vendido de la historia, reinventado como ícono de moda urbana.",
     descripcionCompleta:
@@ -63,7 +62,7 @@ export const productos = [
     categoria: "Urbana",
     precio: 99000,
     imagen:
-      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&q=80",
+      "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=600&q=80",
     descripcion:
       "La zapatilla de skate más reconocida del mundo, con su distintiva franja lateral.",
     descripcionCompleta:
@@ -119,7 +118,6 @@ export const productos = [
     ],
   },
 
-  // ── RUNNING ──────────────────────────────────────────────────────────────────
   {
     id: 5,
     nombre: "Nike Air Zoom Pegasus 41",
@@ -210,7 +208,7 @@ export const productos = [
     categoria: "Running",
     precio: 149999,
     imagen:
-      "https://images.unsplash.com/photo-1571008887538-b36bb32f4571?w=600&q=80",
+      "https://images.unsplash.com/photo-1738959142469-f32cfac8233d?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     descripcion:
       "Amortiguación máxima para rodajes largos. La zapatilla más suave de New Balance.",
     descripcionCompleta:
@@ -232,7 +230,6 @@ export const productos = [
     ],
   },
 
-  // ── TENIS ────────────────────────────────────────────────────────────────────
   {
     id: 9,
     nombre: "Nike Court Vapor Lite 2",
@@ -240,7 +237,7 @@ export const productos = [
     categoria: "Tenis",
     precio: 189999,
     imagen:
-      "https://images.unsplash.com/photo-1549204491-ac75a01a0f49?w=600&q=80",
+      "https://images.unsplash.com/photo-1658492283686-d28b43641700?q=80&w=580&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     descripcion:
       "Velocidad y tracción en todas las superficies. La elección de los pros en pista rápida.",
     descripcionCompleta:
@@ -267,7 +264,7 @@ export const productos = [
     categoria: "Tenis",
     precio: 219999,
     imagen:
-      "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=600&q=80",
+      "https://images.unsplash.com/photo-1780618373050-2b5aac16f93e?q=80&w=869&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     descripcion:
       "Máxima durabilidad y soporte lateral para jugadores de línea de fondo.",
     descripcionCompleta:
@@ -294,7 +291,7 @@ export const productos = [
     categoria: "Tenis",
     precio: 259999,
     imagen:
-      "https://images.unsplash.com/photo-1689357642277-65228ee23680?w=600&q=80",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa2UTx2lDZ1DYeZeR1VGeUwblk3HzhpQsAUQ&s",
     descripcion:
       "La zapatilla más rápida de Babolat, usada por Nadal en tierra batida.",
     descripcionCompleta:
@@ -321,7 +318,7 @@ export const productos = [
     categoria: "Tenis",
     precio: 229999,
     imagen:
-      "https://images.unsplash.com/photo-1738165758746-5bfad0dd55ec?w=600&q=80",
+      "https://www.wilsonstore.com.ar/cdn/shop/files/3_4a7460ec-2e76-4d16-b677-27462baa8f5e.jpg?v=1750182172&width=1200",
     descripcion:
       "Confort y soporte para partidos de larga duración en todas las superficies.",
     descripcionCompleta:
