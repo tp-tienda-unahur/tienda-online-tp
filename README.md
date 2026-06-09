@@ -35,7 +35,7 @@ Abrí [http://localhost:5173](http://localhost:5173) en el navegador.
 
 - Diaz, Marcelo Fabian
 - Lopez, Lucas Federico
-- <!-- Completar -->
+- Darielli, Tomas Francisco
 - <!-- Completar -->
 - <!-- Completar -->
 
