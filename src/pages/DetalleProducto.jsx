@@ -1,11 +1,16 @@
 import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { productos } from '../data/productos';
+import { useFavoritos } from '../context/FavoritosContext';
 
 // vista de los detalle de cada producto
 function DetalleProducto({ agregarAlCarrito, carrito = [] }) {
   const { id } = useParams();
   const [tallaElegida, setTallaElegida] = useState('');
+
+  // Hook para manejar favoritos
+  const { esFavorito, toggleFavorito } = useFavoritos();
+  const esFav = esFavorito(parseInt(id));
 
   const producto = productos.find((p) => p.id === parseInt(id));
 
@@ -58,13 +63,32 @@ function DetalleProducto({ agregarAlCarrito, carrito = [] }) {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
-          <div className="border border-black dark:border-white overflow-hidden" style={{ minHeight: '480px' }}>
+          <div className="border border-black dark:border-white overflow-hidden relative" style={{ minHeight: '480px' }}>
             <img
               src={producto.imagen}
               alt={producto.nombre}
               className="w-full h-full object-cover"
               style={{ minHeight: '480px' }}
             />
+            {/* Botón de favoritos */}
+            <button
+              onClick={() => toggleFavorito(producto)}
+              className={`absolute top-4 right-4 w-10 h-10 flex items-center justify-center transition-all duration-300 ${esFav ? 'text-red-500 scale-110' : 'text-white hover:text-red-500'}`}
+              aria-label={esFav ? 'Quitar de favoritos' : 'Agregar a favoritos'}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill={esFav ? 'currentColor' : 'none'}
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-8 h-8 drop-shadow-lg">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+                />
+              </svg>
+            </button>
           </div>
 
           <div className="flex flex-col justify-between">

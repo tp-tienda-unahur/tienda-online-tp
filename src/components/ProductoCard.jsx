@@ -1,9 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useFavoritos } from '../context/FavoritosContext';
 
 function ProductoCard({ producto, agregarAlCarrito, carrito = [] }) {
   const [tallaElegida, setTallaElegida] = useState('');
   const [agregando, setAgregando] = useState(false);
+
+  // Hook para manejar favoritos
+  const { esFavorito, toggleFavorito } = useFavoritos();
+  const esFav = esFavorito(producto.id);
 
   const sinStock = producto.tallas.every((t) => t.stock === 0);
 
@@ -28,6 +33,12 @@ function ProductoCard({ producto, agregarAlCarrito, carrito = [] }) {
     }, 800);
   }
 
+  // Función para agregar/quitar de favoritos
+  function handleFavorito(e) {
+    e.preventDefault();
+    toggleFavorito(producto);
+  }
+
   return (
     <div className="border border-black dark:border-white flex flex-col group bg-white dark:bg-gray-800">
       <div className="relative overflow-hidden">
@@ -44,7 +55,29 @@ function ProductoCard({ producto, agregarAlCarrito, carrito = [] }) {
         <span className="absolute top-2 left-2 bg-white dark:bg-black text-black dark:text-white text-xs font-bold px-2 py-1 border border-black dark:border-white">
           {producto.categoria}
         </span>
+        {/* Botón de favoritos */}
+        <button
+          onClick={handleFavorito}
+          className={`absolute top-2 right-2 w-8 h-8 flex items-center justify-center transition-all duration-300 ${sinStock ? 'top-10' : ''} ${esFav ? 'text-red-500 scale-110' : 'text-white hover:text-red-500'}`}
+          aria-label={esFav ? 'Quitar de favoritos' : 'Agregar a favoritos'}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill={esFav ? 'currentColor' : 'none'}
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6 drop-shadow-lg"
+           >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+            />
+          </svg>
+        </button>
       </div>
+
+      
 
       {/* Info */}
       <div className="p-4 flex flex-col flex-grow">
