@@ -11,6 +11,7 @@ import Carrito from './pages/Carrito';
 import Contacto from './pages/Contacto';
 import Nosotros from './pages/Nosotros';
 import NotFound from './pages/NotFound';
+import Favoritos from './pages/Favoritos';
 
 function App() {
   // aca vive el estado del carrito, principal donde puede interactuar con todas las paginas que se necesite, laburando desde el estado
@@ -153,6 +154,8 @@ function App() {
               }
             />
             <Route path="*" element={<NotFound />} />
+
+            <Route path="/favoritos" element={<Favoritos />} />
           </Routes>
         </main>
 
