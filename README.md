@@ -37,7 +37,7 @@ Abrí [http://localhost:5173](http://localhost:5173) en el navegador.
 - Lopez, Lucas Federico
 - Darielli, Tomas Francisco
 - Valentin, Jeremias Medina
-- <!-- Completar -->
+- Bertinat, Valentina Daniela
 
 ## Link al deploy
 
